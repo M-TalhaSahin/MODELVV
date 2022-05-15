@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+
+chan trgUploadCAD, trgSCADA, trgScanning;
+
+chan trgWinService,trgMoving;
+
+chan trgScanningComplated;
+chan trgMovingComplated;
+
+bool isMissionComplated = false;
+bool isUploadCADComplated = false;
+bool isSCADAComplated = false;</declaration>
+	<template>
+		<name>UploadCAD</name>
+		<location id="id0" x="-8" y="-195">
+			<name x="-18" y="-229">End</name>
+		</location>
+		<location id="id1" x="-186" y="-195">
+			<name x="-246" y="-229">Trigger_WinService</name>
+		</location>
+		<location id="id2" x="-365" y="-195">
+			<name x="-433" y="-229">Copy_Data_to_CAD_File</name>
+		</location>
+		<location id="id3" x="-543" y="-195">
+			<name x="-602" y="-229">Upload_CAD_Data</name>
+		</location>
+		<location id="id4" x="-765" y="-195">
+			<name x="-808" y="-229">Start</name>
+		</location>
+		<init ref="id4"/>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-331" y="-195">trgWinService!</label>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id2"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-722" y="-195">trgUploadCAD?</label>
+		</transition>
+	</template>
+	<template>
+		<name>WinService</name>
+		<location id="id5" x="-526" y="-518">
+			<name x="-543" y="-552">End</name>
+		</location>
+		<location id="id6" x="-764" y="-518">
+			<name x="-832" y="-552">Write_Detected_Pose_to_MsSql</name>
+		</location>
+		<location id="id7" x="-900" y="-518">
+			<name x="-968" y="-552">Calculate_Orbit</name>
+		</location>
+		<location id="id8" x="-1104" y="-518">
+			<name x="-1163" y="-552">Copy_Data_to_STL_File</name>
+		</location>
+		<location id="id9" x="-1283" y="-518">
+			<name x="-1351" y="-552">Convert_STEP_to_STL</name>
+		</location>
+		<location id="id10" x="-1444" y="-518">
+			<name x="-1504" y="-552">Start</name>
+		</location>
+		<init ref="id10"/>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id5"/>
+			<label kind="assignment" x="-748" y="-510">isUploadCADComplated:=true</label>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id6"/>
+		</transition>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id7"/>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id8"/>
+		</transition>
+		<transition>
+			<source ref="id10"/>
+			<target ref="id9"/>
+			<label kind="synchronisation" x="-1419" y="-510">trgWinService?</label>
+		</transition>
+	</template>
+	<template>
+		<name>SCADA</name>
+		<location id="id11" x="-816" y="-59">
+			<name x="-826" y="-93">End</name>
+		</location>
+		<location id="id12" x="-1054" y="-59">
+			<name x="-1097" y="-93">Write_Vehicle_Info_to_PLC</name>
+		</location>
+		<location id="id13" x="-1198" y="-59">
+			<name x="-1249" y="-93">Confirm</name>
+		</location>
+		<location id="id14" x="-1368" y="-59">
+			<name x="-1436" y="-93">Enter_Vehicle_Info</name>
+		</location>
+		<location id="id15" x="-1538" y="-59">
+			<name x="-1589" y="-93">Start</name>
+		</location>
+		<init ref="id15"/>
+		<transition>
+			<source ref="id12"/>
+			<target ref="id11"/>
+			<label kind="assignment" x="-1020" y="-51">isSCADAComplated:=true</label>
+		</transition>
+		<transition>
+			<source ref="id13"/>
+			<target ref="id12"/>
+		</transition>
+		<transition>
+			<source ref="id14"/>
+			<target ref="id13"/>
+		</transition>
+		<transition>
+			<source ref="id15"/>
+			<target ref="id14"/>
+			<label kind="synchronisation" x="-1496" y="-51">trgSCADA?</label>
+		</transition>
+	</template>
+	<template>
+		<name>Scanning</name>
+		<location id="id16" x="-960" y="-1309">
+			<name x="-1020" y="-1343">Analysis_Results</name>
+		</location>
+		<location id="id17" x="-1479" y="-1309">
+			<name x="-1530" y="-1351">Moving_Start</name>
+		</location>
+		<location id="id18" x="-790" y="-1309">
+			<name x="-832" y="-1343">Write_Results_to_MsSql</name>
+		</location>
+		<location id="id19" x="-1215" y="-1309">
+			<name x="-1224" y="-1343">Moving_End</name>
+		</location>
+		<location id="id20" x="-501" y="-1309">
+			<name x="-511" y="-1343">End</name>
+		</location>
+		<location id="id21" x="-1717" y="-1309">
+			<name x="-1761" y="-1343">Read_Info_from_MsSql</name>
+		</location>
+		<location id="id22" x="-1888" y="-1308">
+			<name x="-1939" y="-1342">Start</name>
+		</location>
+		<init ref="id22"/>
+		<transition>
+			<source ref="id16"/>
+			<target ref="id18"/>
+		</transition>
+		<transition>
+			<source ref="id19"/>
+			<target ref="id16"/>
+			<label kind="guard" x="-1147" y="-1309">isMissionComplated</label>
+		</transition>
+		<transition>
+			<source ref="id19"/>
+			<target ref="id17"/>
+			<label kind="guard" x="-1411" y="-1207">!isMissionComplated</label>
+			<label kind="synchronisation" x="-1385" y="-1224">trgMoving!</label>
+			<label kind="assignment" x="-1428" y="-1190">isMissionComplated:=true</label>
+			<nail x="-1343" y="-1224"/>
+		</transition>
+		<transition>
+			<source ref="id17"/>
+			<target ref="id19"/>
+			<label kind="synchronisation" x="-1402" y="-1419">trgMovingComplated?</label>
+			<nail x="-1343" y="-1394"/>
+		</transition>
+		<transition>
+			<source ref="id21"/>
+			<target ref="id17"/>
+			<label kind="synchronisation" x="-1632" y="-1309">trgMoving!</label>
+		</transition>
+		<transition>
+			<source ref="id18"/>
+			<target ref="id20"/>
+			<label kind="synchronisation" x="-739" y="-1301">trgScanningComplated!</label>
+		</transition>
+		<transition>
+			<source ref="id22"/>
+			<target ref="id21"/>
+			<label kind="synchronisation" x="-1862" y="-1300">trgScanning?</label>
+		</transition>
+	</template>
+	<template>
+		<name>Moving</name>
+		<location id="id23" x="-204" y="-510">
+			<name x="-214" y="-544">End</name>
+		</location>
+		<location id="id24" x="-475" y="-511">
+			<name x="-485" y="-545">Take_Photo</name>
+		</location>
+		<location id="id25" x="-1343" y="-510">
+			<name x="-1353" y="-544">Start</name>
+		</location>
+		<location id="id26" x="-645" y="-511">
+			<name x="-655" y="-545">Pose_Reached</name>
+		</location>
+		<location id="id27" x="-800" y="-510">
+			<name x="-810" y="-544">Run_PLC_Motor</name>
+		</location>
+		<location id="id28" x="-995" y="-510">
+			<name x="-1012" y="-544">Set_PLC_Valirables</name>
+		</location>
+		<location id="id29" x="-1174" y="-510">
+			<name x="-1191" y="-544">Choose_Suitable_Pose</name>
+		</location>
+		<init ref="id25"/>
+		<transition>
+			<source ref="id24"/>
+			<target ref="id23"/>
+		</transition>
+		<transition>
+			<source ref="id23"/>
+			<target ref="id25"/>
+			<label kind="synchronisation" x="-875" y="-714">trgMovingComplated!</label>
+			<nail x="-799" y="-756"/>
+		</transition>
+		<transition>
+			<source ref="id26"/>
+			<target ref="id24"/>
+		</transition>
+		<transition>
+			<source ref="id27"/>
+			<target ref="id26"/>
+		</transition>
+		<transition>
+			<source ref="id28"/>
+			<target ref="id27"/>
+		</transition>
+		<transition>
+			<source ref="id29"/>
+			<target ref="id28"/>
+		</transition>
+		<transition>
+			<source ref="id25"/>
+			<target ref="id29"/>
+			<label kind="synchronisation" x="-1309" y="-510">trgMoving?</label>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">Rokos</name>
+		<declaration>// Place local declarations here.</declaration>
+		<location id="id30" x="-1028" y="-875">
+			<name x="-1038" y="-909">End</name>
+		</location>
+		<location id="id31" x="-1215" y="-875">
+			<name x="-1225" y="-909">Scanning</name>
+		</location>
+		<location id="id32" x="-1377" y="-875">
+			<name x="-1387" y="-909">SCADA</name>
+		</location>
+		<location id="id33" x="-1530" y="-875">
+			<name x="-1590" y="-909">Upload_Data</name>
+		</location>
+		<location id="id34" x="-1691" y="-875">
+			<name x="-1734" y="-909">Start</name>
+		</location>
+		<init ref="id34"/>
+		<transition>
+			<source ref="id31"/>
+			<target ref="id30"/>
+			<label kind="synchronisation" x="-1181" y="-867">trgScanningComplated?</label>
+		</transition>
+		<transition>
+			<source ref="id32"/>
+			<target ref="id31"/>
+			<label kind="guard" x="-1445" y="-960">isUploadCADComplated &amp;&amp; isSCADAComplated</label>
+			<label kind="synchronisation" x="-1343" y="-866">trgScanning!</label>
+		</transition>
+		<transition>
+			<source ref="id33"/>
+			<target ref="id32"/>
+			<label kind="synchronisation" x="-1496" y="-866">trgSCADA!</label>
+		</transition>
+		<transition>
+			<source ref="id34"/>
+			<target ref="id33"/>
+			<label kind="synchronisation" x="-1666" y="-858">trgUploadCAD!</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+UploadCAD_ = UploadCAD();
+WinService_ = WinService();
+SCADA_ = SCADA();
+Scanning_ = Scanning();
+Moving_ = Moving();
+Rokos_ = Rokos();
+
+
+
+
+// List one or more processes to be composed into a system.
+system UploadCAD, WinService, SCADA, Scanning , Moving, Rokos  ;
+    </system>
+	<queries>
+	</queries>
+</nta>

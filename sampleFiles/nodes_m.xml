@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+
+// mutual exclusiın için kullanacagım degısken. 
+
+bool isAvailable = true;
+
+
+
+</declaration>
+	<template>
+		<name x="5" y="5">Robot</name>
+		<declaration>// Place local declarations here.</declaration>
+		<location id="id0" x="25" y="-34">
+			<name x="17" y="-8">State2</name>
+		</location>
+		<location id="id1" x="-195" y="-34">
+			<name x="-221" y="-8">State1</name>
+		</location>
+		<init ref="id1"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="assignment" x="-153" y="-178">isAvailable := true</label>
+			<nail x="-93" y="-161"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-119" y="-68">isAvailable</label>
+			<label kind="assignment" x="-153" y="-25">isAvailable := false</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+R1 = Robot();
+R2 = Robot();
+R3 = Robot();
+R4 = Robot();
+// List one or more processes to be composed into a system.
+system R1,R2,R3,R4;
+    </system>
+	<queries>
+	</queries>
+</nta>
