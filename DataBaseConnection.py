@@ -47,8 +47,8 @@ class DataBaseConnection:
     def selectUppaalQueries(self, modelID):
         cursor = self.connection.cursor()
         cursor.execute(
-            "SELECT tblquery.query, tblquery.description, tblquery.result FROM tblquery WHERE tblquery.modelID=%s",
-            str(modelID))
+            "SELECT tblquery.query, tblquery.description, tblquery.result FROM tblquery "
+            "WHERE tblquery.modelID={0}".format(str(modelID)))
         rec = cursor.fetchall()
         cursor.close()
         return rec

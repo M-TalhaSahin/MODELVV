@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\muham\Documents\GitHub\valu3s_tool\ui\untitled16.ui'
+# Form implementation generated from reading ui file 'C:\Users\muham\Documents\GitHub\valu3s_tool\ui\untitled.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -20,6 +20,16 @@ class Ui_MainWindow(object):
         self.lwModelList = QtWidgets.QListView(self.centralwidget)
         self.lwModelList.setGeometry(QtCore.QRect(20, 41, 201, 301))
         self.lwModelList.setObjectName("lwModelList")
+        self.wcontUPPAALDemo = QtWidgets.QStackedWidget(self.centralwidget)
+        self.wcontUPPAALDemo.setGeometry(QtCore.QRect(509, 39, 901, 771))
+        self.wcontUPPAALDemo.setFrameShape(QtWidgets.QFrame.Box)
+        self.wcontUPPAALDemo.setObjectName("wcontUPPAALDemo")
+        self.page = QtWidgets.QWidget()
+        self.page.setObjectName("page")
+        self.wcontUPPAALDemo.addWidget(self.page)
+        self.page_2 = QtWidgets.QWidget()
+        self.page_2.setObjectName("page_2")
+        self.wcontUPPAALDemo.addWidget(self.page_2)
         self.lblModelID = QtWidgets.QLabel(self.centralwidget)
         self.lblModelID.setGeometry(QtCore.QRect(240, 70, 251, 31))
         self.lblModelID.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -27,7 +37,6 @@ class Ui_MainWindow(object):
         self.lblFileName = QtWidgets.QLabel(self.centralwidget)
         self.lblFileName.setGeometry(QtCore.QRect(240, 110, 251, 31))
         self.lblFileName.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.lblFileName.setTextFormat(QtCore.Qt.AutoText)
         self.lblFileName.setObjectName("lblFileName")
         self.lblCreateDate = QtWidgets.QLabel(self.centralwidget)
         self.lblCreateDate.setGeometry(QtCore.QRect(240, 150, 251, 31))
@@ -43,15 +52,6 @@ class Ui_MainWindow(object):
         self.btnSaveDataBase = QtWidgets.QPushButton(self.centralwidget)
         self.btnSaveDataBase.setGeometry(QtCore.QRect(372, 350, 121, 28))
         self.btnSaveDataBase.setObjectName("btnSaveDataBase")
-        self.tabWidgetTemplates = QtWidgets.QTabWidget(self.centralwidget)
-        self.tabWidgetTemplates.setGeometry(QtCore.QRect(510, 40, 901, 771))
-        self.tabWidgetTemplates.setObjectName("tabWidgetTemplates")
-        self.tabTemplate1 = QtWidgets.QWidget()
-        self.tabTemplate1.setObjectName("tabTemplate1")
-        self.tabWidgetTemplates.addTab(self.tabTemplate1, "")
-        self.listView = QtWidgets.QListView(self.centralwidget)
-        self.listView.setGeometry(QtCore.QRect(20, 420, 471, 391))
-        self.listView.setObjectName("listView")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1421, 26))
@@ -62,7 +62,6 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidgetTemplates.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -74,7 +73,6 @@ class Ui_MainWindow(object):
         self.lblDescription.setText(_translate("MainWindow", "Description"))
         self.btnFromLocal.setText(_translate("MainWindow", "Open From Local"))
         self.btnSaveDataBase.setText(_translate("MainWindow", "Save To DataBase"))
-        self.tabWidgetTemplates.setTabText(self.tabWidgetTemplates.indexOf(self.tabTemplate1), _translate("MainWindow", "Template 1"))
 
 
 if __name__ == "__main__":
