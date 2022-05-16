@@ -2,6 +2,7 @@ import psycopg2
 from datetime import datetime
 import re
 import xml.etree.ElementTree as ET
+from PyQt5.QtCore import Qt
 
 
 class DataBaseConnection:
@@ -47,11 +48,25 @@ class DataBaseConnection:
     def selectUppaalQueries(self, modelID):
         cursor = self.connection.cursor()
         cursor.execute(
-            "SELECT tblquery.query, tblquery.description, tblquery.result FROM tblquery "
+            "SELECT tblquery.query, tblquery.description, tblquery.result, tblquery.queryid FROM tblquery "
             "WHERE tblquery.modelID={0}".format(str(modelID)))
         rec = cursor.fetchall()
         cursor.close()
         return rec
+
+    def setQueryState(self, queryID, state):
+        cursor = self.connection.cursor()
+        stateFormatted = 'null'
+        if state == Qt.CheckState.Unchecked:
+            stateFormatted = '0'
+        elif state == Qt.CheckState.Checked:
+            stateFormatted = '1'
+        cursor.execute(
+            "update tblquery set result = {0}::bit(1) where queryid={1}".format(stateFormatted, str(queryID)))
+
+        self.connection.commit()
+        cursor.close()
+        pass
 
     def selectAllModelIDInfo(self):
         cursor = self.connection.cursor()

@@ -27,7 +27,7 @@ class UIConnection(QMainWindow):
 
         self.lwModel = QStandardItemModel(self.ui.lwModelList)
 
-
+        self.ui.btnQuerySave.setEnabled(False)
         self.ui.btnSaveDataBase.setEnabled(False)
         self.fillLWFromDB()
         self.UiComponents()
@@ -36,6 +36,7 @@ class UIConnection(QMainWindow):
         self.ui.btnFromLocal.clicked.connect(self.openFromLocal)
         self.ui.btnSaveDataBase.clicked.connect(self.save2DataBase)
         self.ui.lwModelList.doubleClicked.connect(self.listItemClicked)
+        self.ui.btnQuerySave.clicked.connect(self.saveQueryStates)
 
     def setDisplayerWidget(self, nodeEdgeList):
         self.ui.tabWidgetTemplates.clear()
@@ -74,6 +75,7 @@ class UIConnection(QMainWindow):
             item = QStandardItem(queryList[i][0] + "\n" + queryList[i][1])
             item.setEditable(False)
             item.setCheckable(True)
+            item.setData(queryList[i][3])
             if not queryList[i][2]:
                 item.setCheckState(Qt.CheckState.PartiallyChecked)
             elif queryList[i][2] == '1':
@@ -98,6 +100,7 @@ class UIConnection(QMainWindow):
         self.ui.lwModelList.setModel(self.lwModel)
 
     def openFromLocal(self):
+        self.ui.btnQuerySave.setEnabled(False)
         fname, filter = QFileDialog.getOpenFileName(self, 'Select xml file', '', 'Graph (*.xml);;All files (*)')
         if fname:
             with open(fname, "r") as f:
@@ -134,6 +137,7 @@ class UIConnection(QMainWindow):
             self.setLabelTexts(fileName=fname)
             self.setNonDBQueriesToWidget(fname)
         else:
+            self.ui.btnQuerySave.setEnabled(True)
             self.ui.btnSaveDataBase.setEnabled(False)
             self.currentFileName = None
             xmlProp = getNodeEdgeList(self.dbClass.selectUppaalModelXml(self.modelsList[index][0]))
@@ -143,4 +147,9 @@ class UIConnection(QMainWindow):
             self.setDisplayerWidget(xmlProp)
             self.setQueriesToWidget(self.dbClass.selectUppaalQueries(self.modelsList[index][0]))
 
+    def saveQueryStates(self):
+        model = self.ui.listView.model()
+        for i in range(model.rowCount()):
+            item = model.item(i)
+            self.dbClass.setQueryState(item.data(), item.checkState())
 

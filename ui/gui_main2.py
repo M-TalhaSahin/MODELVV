@@ -50,14 +50,11 @@ class Ui_MainWindow(object):
         self.tabTemplate1.setObjectName("tabTemplate1")
         self.tabWidgetTemplates.addTab(self.tabTemplate1, "")
         self.listView = QtWidgets.QListView(self.centralwidget)
-        self.listView.setGeometry(QtCore.QRect(20, 420, 471, 351))
+        self.listView.setGeometry(QtCore.QRect(20, 420, 471, 391))
         self.listView.setObjectName("listView")
-        self.btnQuerySave = QtWidgets.QPushButton(self.centralwidget)
-        self.btnQuerySave.setGeometry(QtCore.QRect(370, 780, 121, 28))
-        self.btnQuerySave.setObjectName("btnQuerySave")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1421, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1421, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -78,7 +75,6 @@ class Ui_MainWindow(object):
         self.btnFromLocal.setText(_translate("MainWindow", "Open From Local"))
         self.btnSaveDataBase.setText(_translate("MainWindow", "Save To DataBase"))
         self.tabWidgetTemplates.setTabText(self.tabWidgetTemplates.indexOf(self.tabTemplate1), _translate("MainWindow", "Template 1"))
-        self.btnQuerySave.setText(_translate("MainWindow", "Save Query States"))
 
 
 if __name__ == "__main__":
